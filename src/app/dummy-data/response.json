@@ -1,0 +1,34 @@
+{
+  "data": {
+    "message": "Sure! Here's a sample JSON array with three records that match your structure:",
+    "itenanray": [
+      {
+        "itinerary_no": "A1B2C3D4E5",
+        "image": "https://images.unsplash.com/photo-1502602898657-3e91760cbb34",
+        "image_url": "https://images.unsplash.com/photo-1502602898657-3e91760cbb34",
+        "itinerary_name": "Romantic Paris Getaway",
+        "booking_prepared_for": "",
+        "no_of_days": 5,
+        "start_date": ""
+      },
+      {
+        "itinerary_no": "F6G7H8I9J0",
+        "image": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e",
+        "image_url": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e",
+        "itinerary_name": "Bali Beach Adventure",
+        "booking_prepared_for": "",
+        "no_of_days": 7,
+        "start_date": ""
+      },
+      {
+        "itinerary_no": "K1L2M3N4O5",
+        "image": "https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0",
+        "image_url": "https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0",
+        "itinerary_name": "New York City Explorer",
+        "booking_prepared_for": "",
+        "no_of_days": 4,
+        "start_date": ""
+      }
+    ]
+  }
+}
