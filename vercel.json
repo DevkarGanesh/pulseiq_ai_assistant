@@ -2,6 +2,6 @@
     "rewrites": [
       { "source": "/(.*)", "destination": "/index.html" }
     ],
-    "outputDirectory": "dist/email-analysis"
+    "outputDirectory": "dist/chat"
   }
   

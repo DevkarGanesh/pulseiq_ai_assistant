@@ -43,13 +43,13 @@
 
             </div>
             <!-- <pre>{{ itineraryUrls | json }}</pre> -->
-            <div class="contact-us">
-              <div class="bot-msg">Didn't find the perfect itinerary for your adventure? No worries — we can customize it just for you!</div>
-              <a [href]="enquiryUrl" target="_blank">ENQUIRE NOW</a>
-            </div>
+            
             
           </div>
-       
+          <div *ngIf="message.type === 'bot'" class="contact-us">
+            <div class="bot-msg">Didn't find the perfect itinerary for your adventure? No worries — we can customize it just for you!</div>
+            <a [href]="'javascript:void(0)'">ENQUIRE NOW</a>
+          </div>
         </div>
       </div>
 
@@ -70,7 +70,7 @@
         #userMessageInput
         placeholder="Type your holiday idea or prompt..."
         (keydown.enter)="sendMessage(userMessageInput.value)"
-        rows="3"
+        rows="2"
         class="styled-textarea"
       ></textarea>
 

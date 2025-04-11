@@ -148,20 +148,21 @@ export class AppComponent implements OnInit {
       next: (res: any) => {
         this.isLoading = false;
 
-        console.log('Response:', res);
+        // console.log('Response:', res);
 
         const botMessage: Message = {
           content:
             res?.message ||
             'Here are a few handpicked travel ideas we think you’ll love based on what you shared! Each one is crafted to give you a unique experience, with a perfect blend of adventure, comfort, and discovery. Let us know if any of these catch your eye!',
           type: 'bot',
+          
         };
 
         if (res?.recommendations && res.recommendations.length > 0) {
           botMessage.itineraries = res.recommendations;
 
           res.recommendations.forEach((trip: any) => {
-            console.log('Calling decryption for', trip.holiday_formatted_id);
+            // console.log('Calling decryption for', trip.holiday_formatted_id);
 
             if(trip.holiday_formatted_id.endsWith('-W')){
               this.itineraryUrls[
