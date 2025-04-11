@@ -166,8 +166,8 @@
               <div class="trip-details">
                 <!-- <h3>{{ trip.holiday_name }}</h3> -->
                 <p>NO. OF DAYS: {{ trip.no_of_days || 'TBD'}}</p>
-                <p>START DATE: {{ trip.start_date || 'TBD' }}</p>
-                <p>BOOKING FOR: {{ trip.booking_prepared_for || 'TBD' }}</p>
+                <!-- <p>START DATE: {{ trip.start_date || 'TBD' }}</p>
+                <p>BOOKING FOR: {{ trip.booking_prepared_for || 'TBD' }}</p> -->
                 <div class="hr-line"></div>
                 <a  [href]="itineraryUrls[trip.holiday_formatted_id]" target="_blank">EXPLORE TRIP</a>
               </div>
@@ -196,12 +196,20 @@
     </div>
 
     <div class="input-container">
-      <input
+      <!-- <input
         #userMessageInput
         type="text"
         placeholder="Type your holiday idea or prompt..."
         (keydown.enter)="sendMessage(userMessageInput.value)"
-      />
+      /> -->
+      <textarea
+        #userMessageInput
+        placeholder="Type your holiday idea or prompt..."
+        (keydown.enter)="sendMessage(userMessageInput.value)"
+        rows="3"
+        class="styled-textarea"
+      ></textarea>
+
       <svg
         (click)="sendMessage(userMessageInput.value)"
         class="send-icon"

@@ -393,7 +393,10 @@ export class AppComponent implements OnInit {
 
     // Clear input
     if (this.userMessageInput) {
-      this.userMessageInput.nativeElement.value = '';
+      // this.userMessageInput.nativeElement.value = '';
+      const inputEl = this.userMessageInput.nativeElement as HTMLTextAreaElement;
+      inputEl.value = '';
+      inputEl.blur();
     }
 
     this.isLoading = true;
@@ -403,6 +406,7 @@ export class AppComponent implements OnInit {
 
     // Scroll to bottom after view update
     setTimeout(() => this.scrollToBottom(), 100);
+    
   }
   getEnquiryUrl(){
     this.xmlConfigService.getValueByKey('enquiryurl').subscribe(
@@ -418,7 +422,6 @@ export class AppComponent implements OnInit {
   getChatReply(userText: string) {
     this.chatService.getResponse(userText).subscribe({
       next: (res: any) => {
-        // debugger;
         this.isLoading = false;
 
         console.log('Response:', res);
@@ -426,7 +429,7 @@ export class AppComponent implements OnInit {
         const botMessage: Message = {
           content:
             res?.message ||
-            'I’ve put together a few exciting travel options that might be perfect for your next adventure! I’ve put together a few exciting travel options that might be perfect for your next adventure! I’ve put together a few exciting travel options that might be perfect for your next adventure!',
+            'Here are a few handpicked travel ideas we think you’ll love based on what you shared! Each one is crafted to give you a unique experience, with a perfect blend of adventure, comfort, and discovery. Let us know if any of these catch your eye!',
           type: 'bot',
         };
 
@@ -435,7 +438,15 @@ export class AppComponent implements OnInit {
 
           res.recommendations.forEach((trip: any) => {
             console.log('Calling decryption for', trip.holiday_formatted_id);
-            this.decryptService
+
+            if(trip.holiday_formatted_id.endsWith('-W')){
+              this.itineraryUrls[
+                trip.holiday_formatted_id
+              ] = trip.holiday_url;
+              this.messages = [...this.messages];
+            }
+            else{
+              this.decryptService
               .getEncryptItNo(trip.holiday_formatted_id)
               .subscribe((encryptedNo: string) => {
                 this.itineraryUrls[
@@ -443,6 +454,8 @@ export class AppComponent implements OnInit {
                 ] = `${environment.redirectDomain}/${encryptedNo}`;
                 this.messages = [...this.messages];
               });
+            }
+           
           });
         }
 
