@@ -13,24 +13,7 @@ export class ChatService {
     private xmlConfigService: XmlConfigService
   ) { }
 
-  // getResponse(userText: any): Observable<any> {
-
-  //   return this.xmlConfigService.getValueByKey('applicationname').pipe(
-  //     switchMap((code: any) => {
-  //       this.tenantId = code;
-  //       if (this.tenantId) {
-  //         console.log(`${environment.chatUrl}/${this.tenantId}/?search_query=${userText}`);
-  //         return this.http.post<any>(`${environment.chatUrl}/${this.tenantId}/?search_query=${userText}`,{ query: userText });
-  //       } else {
-  //         return throwError(() => new Error('Tenant ID is undefined'));
-  //       }
-  //     }),
-  //     catchError((err: any) => {
-  //       console.error('Unable to get application name', err);
-  //       return throwError(() => err);
-  //     })
-  //   );
-  // }
+ 
   getConfigValues(){
     
   }

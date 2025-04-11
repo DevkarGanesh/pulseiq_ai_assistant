@@ -431,8 +431,7 @@
     padding: 8px 12px;
     font-weight: bold;
     font-size: 1.1em;
-    /* border-bottom-left-radius: 8px;
-    border-bottom-right-radius: 8px; */
+ 
   }
 
   
@@ -467,34 +466,7 @@
   }
 
 
-/*   
-  .styled-textarea {
-    background-color: #1e1e1e;
-    color: white;
-    border: 1px solid #444;
-    border-radius: 8px;
-    padding: 10px 14px;
-    width: 100%;
-    resize: none;
-    font-size: 16px;
-    outline: none;
-    box-sizing: border-box;
-  }
-  
-  .styled-textarea::placeholder {
-    color: #aaa;
-  }
-  
-  .send-icon {
-    cursor: pointer;
-    margin-left: 10px;
-    width: 24px;
-    height: 24px;
-    align-self: center;
-  }
-   */
-
-   .input-container {
+  .input-container {
     display: flex;
     align-items: center;
     background-color: #1e1e1e;

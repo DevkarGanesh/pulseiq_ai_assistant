@@ -1,95 +1,3 @@
-<!-- <div class="content">
-  <app-header></app-header>
-  <h1>Discover Your Dream Holiday with AI</h1>
-  <p>
-    Discover your next perfect getaway with the power of AI. Just describe what
-    you’re looking for—and let our smart assistant generate personalized holiday
-    ideas in seconds.
-  </p>
-  <div class="chat">
-    <input type="text" />
-  </div>
-</div> -->
-
-<!-- <div class="content">
-  <app-header></app-header>
-
-  <div class="chat">
-    <div class="chat-body">
-      <h1>Discover Your Dream Holiday with AI</h1>
-      <p>
-        Discover your next perfect getaway with the power of AI. Just describe
-        what you’re looking for—and let our smart assistant generate
-        personalized holiday ideas in seconds.
-      </p>
-    </div>
-    <div class="input-container">
-      <input
-        type="text"
-        placeholder="Type your holiday idea or prompt..."
-        (keydown.enter)="
-          sendMessage(userMessageInput.value); userMessageInput.value = ''
-        "
-      />
-      <svg
-        (click)="
-          sendMessage(userMessageInput.value); userMessageInput.value = ''
-        "
-        class="send-icon"
-        xmlns="http://www.w3.org/2000/svg"
-        height="100"
-        width="100"
-        viewBox="0 0 24 24"
-      >
-        <path fill="white" d="M2 21l21-9L2 3v7l15 2-15 2v7z" />
-      </svg>
-    </div>
-  </div>
-</div> -->
-
-<!-- <div class="content">
-  <app-header></app-header>
-
-  <div class="chat">
-    <div class="chat-body">
-   
-    <div *ngIf="apiMessage" class="api-message">
-      {{ apiMessage }}
-    </div>
-    
-    <div *ngIf="itineraries?.length" class="itinerary-list">
-      <div class="itinerary-card" *ngFor="let trip of itineraries">
-        <img [src]="trip.image_url" alt="{{ trip.itinerary_name }}" class="trip-image" />
-        <div class="trip-details">
-          <h3>{{ trip.itinerary_name }}</h3>
-          <p><strong>Duration:</strong> {{ trip.no_of_days }} Days</p>
-          <p><strong>Start Date:</strong> {{ trip.start_date || 'TBD' }}</p>
-          <p><strong>Booking For:</strong> {{ trip.booking_prepared_for || 'TBD' }}</p>
-          <a [href]="itineraryUrls[trip.itinerary_no]" target="_blank">Click to Visit</a>
-        </div>
-      </div>
-    </div>
-  </div>
-    
-
-    <div class="input-container">
-      <input
-        #userMessageInput
-        type="text"
-        placeholder="Type your holiday idea or prompt..."
-        (keydown.enter)="sendMessage(userMessageInput.value); userMessageInput.value = ''"
-      />
-      <svg
-        (click)="sendMessage(userMessageInput.value); userMessageInput.value = ''"
-        class="send-icon"
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 24 24"
-      >
-        <path fill="white" d="M2 21l21-9L2 3v7l15 2-15 2v7z" />
-      </svg>
-    </div>
-  </div>
-</div> -->
 
 <div class="content">
   <app-header></app-header>
@@ -104,46 +12,7 @@
         what you’re looking for—and let our smart assistant generate
         personalized holiday ideas in seconds.
       </p>
-      <!-- <div class="input-container">
-        <input 
-          type="text" 
-          class="typing-input" 
-          readonly
-        >
-        <span class="cursor" [ngClass]="{'cursor-hidden': !showCursor}">|</span>
-      </div> -->
-
-      <!-- <div class="input-container-sample" *ngIf="!messages || messages?.length ===0">
-        <input 
-          type="text" 
-          class="typing-input" 
-          [value]="currentTypingText"
-          readonly
-          #typingInput
-        >
-        <span class="cursor" [ngClass]="{'cursor-hidden': !showCursor}">|</span>
-      </div> -->
-
-      <!-- <div
-        class="input-container-sample"
-        *ngIf="!messages || messages?.length === 0"
-      >
       
-        <div class="typing-container">
-          <span class="typing-text">{{ currentTypingText }}</span
-          ><span
-            class="cursor"
-            [ngClass]="{ 'cursor-hidden': !showCursor }"
-          ></span>
-          <svg
-            class="send-icon"
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 24 24"
-          >
-            <path fill="white" d="M2 21l21-9L2 3v7l15 2-15 2v7z" />
-          </svg>
-        </div>
-      </div> -->
 
       <div
         *ngFor="let message of messages"
@@ -196,12 +65,7 @@
     </div>
 
     <div class="input-container">
-      <!-- <input
-        #userMessageInput
-        type="text"
-        placeholder="Type your holiday idea or prompt..."
-        (keydown.enter)="sendMessage(userMessageInput.value)"
-      /> -->
+     
       <textarea
         #userMessageInput
         placeholder="Type your holiday idea or prompt..."
