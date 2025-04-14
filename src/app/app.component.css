@@ -302,7 +302,7 @@
       /* width: 100%; */
       max-width: 100vw;
     }
-    
+     
     .input-container {
       width: 85%;
     }
@@ -317,10 +317,15 @@
     }
     
     .itinerary-list {
-      justify-content: center;
+      /* justify-content: center; */
+      justify-content: start;
     }
   }
-
+@media (max-width:480px){
+  .trip-image{
+    height: 120px !important;
+  }  
+}
 
 
 
