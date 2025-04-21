@@ -1,9 +1,9 @@
-
-<div class="content">
+<!-- <div class="container-fluid content"> -->
+<section>
   <app-header></app-header>
 
   <div class="chat">
-    <div class="chat-body" #chatBodyRef>
+    <div class="container chat-body" #chatBodyRef>
       <h1 *ngIf="!messages || messages?.length === 0">
         Discover Your Dream Holiday with AI
       </h1>
@@ -12,42 +12,45 @@
         what you’re looking for—and let our smart assistant generate
         personalized holiday ideas in seconds.
       </p>
-      
 
-      <div
-        *ngFor="let message of messages"
-        class="message-container"
-        [ngClass]="message.type"
-      >
+
+      <div *ngFor="let message of messages" class="message-container" [ngClass]="message.type">
         <div class="message-box message-body">
           <div class="bot-msg">{{ message.content }}</div>
 
-          <div
-            *ngIf="message.itineraries && message.itineraries.length > 0"
-            class="itinerary-list"
-          >
+          <div *ngIf="message.itineraries && message.itineraries.length > 0" class="itinerary-list">
             <div class="itinerary-card" *ngFor="let trip of message.itineraries">
               <!-- <img [src]="trip.holiday_image" alt="{{ trip.holiday_name }}" class="trip-image" /> -->
               <div class="image-wrapper">
                 <img [src]="trip.holiday_image" alt="{{ trip.holiday_name }}" class="trip-image" />
-                <div class="trip-title-overlay">{{ trip.holiday_name }}</div>
+                <div class="overlay">
+                  <div>
+                    <p class="trip-title-overlay">{{ trip.holiday_name }}</p>
+                  </div>
+                  <div>
+                    <a class="trip-title-overlay-btn" [href]="itineraryUrls[trip.holiday_formatted_id]"
+                      target="_blank">EXPLORE TRIP</a>
+                  </div>
+                </div>
+
               </div>
+              <!-- 
               <div class="trip-details">
-                <!-- <h3>{{ trip.holiday_name }}</h3> -->
-                <!-- <p>NO. OF DAYS: {{ trip.no_of_days || 'TBD'}}</p> -->
-                <!-- <p>START DATE: {{ trip.start_date || 'TBD' }}</p>
-                <p>BOOKING FOR: {{ trip.booking_prepared_for || 'TBD' }}</p> -->
-                <!-- <div class="hr-line"></div> -->
-                <a  [href]="itineraryUrls[trip.holiday_formatted_id]" target="_blank">EXPLORE TRIP</a>
-              </div>
+                <h3>{{ trip.holiday_name }}</h3>
+                <p>NO. OF DAYS: {{ trip.no_of_days || 'TBD'}}</p>
+                <p>START DATE: {{ trip.start_date || 'TBD' }}</p>
+                <p>BOOKING FOR: {{ trip.booking_prepared_for || 'TBD' }}</p>
+                <div class="hr-line"></div>
+              </div> -->
 
             </div>
             <!-- <pre>{{ itineraryUrls | json }}</pre> -->
-            
-            
+
+
           </div>
           <div *ngIf="message.type === 'bot'" class="contact-us">
-            <div class="bot-msg">Didn't find the perfect itinerary for your adventure? No worries — we can customize it just for you!</div>
+            <div class="bot-msg">Didn't find the perfect itinerary for your adventure? No worries — we can customize it
+              just for you!</div>
             <a [href]="'javascript:void(0)'">ENQUIRE NOW</a>
           </div>
         </div>
@@ -64,24 +67,33 @@
       </div>
     </div>
 
-    <div class="input-container">
-     
-      <textarea
-        #userMessageInput
-        placeholder="Type your holiday idea or prompt..."
-        (keydown.enter)="sendMessage(userMessageInput.value)"
-        rows="2"
-        class="styled-textarea"
-      ></textarea>
+    <div class="container input-container">
 
-      <svg
+      <textarea #userMessageInput placeholder="Type your holiday idea or prompt..."
+        (keydown.enter)="sendMessage(userMessageInput.value)" rows="2" class="styled-textarea"></textarea>
+
+      <!-- <svg
         (click)="sendMessage(userMessageInput.value)"
         class="send-icon"
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 24 24"
       >
         <path fill="white" d="M2 21l21-9L2 3v7l15 2-15 2v7z" />
-      </svg>
+      </svg> -->
+      <ng-container *ngIf="!isLoading; else generating">
+        <svg (click)="sendMessage(userMessageInput.value)" class="send-icon" xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24">
+          <path fill="white" d="M2 21l21-9L2 3v7l15 2-15 2v7z" />
+        </svg>
+      </ng-container>
+
+      <ng-template #generating>
+        <svg class="send-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+          <circle cx="12" cy="12" r="10" fill="white" />
+          <rect x="9" y="9" width="6" height="6" fill="black" rx="1" ry="1" />
+        </svg>
+      </ng-template>
+
     </div>
   </div>
-</div>
+</section>
