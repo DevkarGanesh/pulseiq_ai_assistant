@@ -5,10 +5,11 @@
   align-items: center;
   padding: 10px 20px;
   background: radial-gradient( ellipse at top,#1a1a1a 0%,#0d0d0d 100%) ;  
+  height: 80px;
 }  
 .logo {
-  height: 50px;
-  object-fit: contain;
+  height: 45px;
+  /* object-fit: contain; */
 }
   
 
