@@ -69,8 +69,8 @@
   <div class="input-area">
     <div class="input-glass-wrapper">
       <textarea #userMessageInput placeholder="Type your message..."
-        (keydown.enter)="sendMessage(userMessageInput.value); $event.preventDefault()" rows="1"></textarea>
-
+        (keydown.enter)="sendMessage(userMessageInput.value); $event.preventDefault()"
+        (input)="adjustTextareaHeight($event)" rows="1"></textarea>
       <button class="send-btn" [disabled]="isLoading || !userMessageInput.value"
         (click)="sendMessage(userMessageInput.value)">
         <!-- Solid icon for white background visibility -->
