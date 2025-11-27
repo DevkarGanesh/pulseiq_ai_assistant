@@ -1,16 +1,36 @@
-
 .navbar-custom {
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  padding: 10px 20px;
-  background: radial-gradient( ellipse at top,#1a1a1a 0%,#0d0d0d 100%) ;  
-  height: 80px;
-}  
-.logo {
-  height: 45px;
-  /* object-fit: contain; */
-}
-  
+  padding: 0 24px;
 
-  
+  /* Dark Background to support Transparent/White Logo */
+  background: #1a1a1a;
+  /* Optional: A subtle gradient if you want it to look 3D like the video */
+  background: linear-gradient(to bottom, #2d2d2d 0%, #1a1a1a 100%);
+
+  /* Shadow to separate header from the white chat body */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+
+  height: 70px;
+  width: 100%;
+  box-sizing: border-box;
+  position: relative;
+  z-index: 1000;
+  /* Ensure it stays on top of chat scroll */
+}
+
+.navbar-brand {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.logo {
+  height: 40px;
+  width: auto;
+  object-fit: contain;
+  /* If the logo is purely white, this is perfect. 
+     If it's black text, you might need: filter: invert(1); */
+}

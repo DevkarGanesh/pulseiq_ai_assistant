@@ -6,6 +6,7 @@ import { ChatService } from './services/chat.service';
 import { DecryptService } from './services/decrypt.service';
 import { environment } from '../environment/environmant';
 import { XmlConfigService } from './services/xml-config.service';
+import { MarkdownComponent } from 'ngx-markdown';
 
 interface Message {
   content: string;
@@ -18,7 +19,7 @@ interface Message {
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
-  imports: [HeaderComponent, CommonModule],
+  imports: [HeaderComponent, CommonModule, MarkdownComponent],
 })
 export class AppComponent implements OnInit {
   @ViewChild('userMessageInput') userMessageInput!: ElementRef;
@@ -29,7 +30,7 @@ export class AppComponent implements OnInit {
     private chatService: ChatService,
     private decryptService: DecryptService,
     private xmlConfigService: XmlConfigService
-  ) {}
+  ) { }
 
   title = 'chat';
   messages: Message[] = [];
@@ -130,14 +131,14 @@ export class AppComponent implements OnInit {
 
     // Scroll to bottom after view update
     setTimeout(() => this.scrollToBottom(), 100);
-    
+
   }
-  getEnquiryUrl(){
+  getEnquiryUrl() {
     this.xmlConfigService.getValueByKey('enquiryurl').subscribe(
-      (value)=>{
+      (value) => {
         this.enquiryUrl = value;
       },
-      (err:any)=>{
+      (err: any) => {
         console.error("Unable to find config");
       }
     );
@@ -152,37 +153,37 @@ export class AppComponent implements OnInit {
 
         const botMessage: Message = {
           content:
-            res?.message ||
-            'Here are a few handpicked travel ideas we think you’ll love based on what you shared! Each one is crafted to give you a unique experience, with a perfect blend of adventure, comfort, and discovery. Let us know if any of these catch your eye!',
+            res?.data?.ai_response ||
+            '',
           type: 'bot',
-          
+
         };
 
-        if (res?.recommendations && res.recommendations.length > 0) {
-          botMessage.itineraries = res.recommendations;
+        // if (res?.recommendations && res.recommendations.length > 0) {
+        //   botMessage.itineraries = res.recommendations;
 
-          res.recommendations.forEach((trip: any) => {
-            // console.log('Calling decryption for', trip.holiday_formatted_id);
+        //   res.recommendations.forEach((trip: any) => {
+        //     // console.log('Calling decryption for', trip.holiday_formatted_id);
 
-            if(trip.holiday_formatted_id.endsWith('-W')){
-              this.itineraryUrls[
-                trip.holiday_formatted_id
-              ] = trip.holiday_url;
-              this.messages = [...this.messages];
-            }
-            else{
-              this.decryptService
-              .getEncryptItNo(trip.holiday_formatted_id)
-              .subscribe((encryptedNo: string) => {
-                this.itineraryUrls[
-                  trip.holiday_formatted_id
-                ] = `${environment.redirectDomain}/${encryptedNo}`;
-                this.messages = [...this.messages];
-              });
-            }
-           
-          });
-        }
+        //     if (trip.holiday_formatted_id.endsWith('-W')) {
+        //       this.itineraryUrls[
+        //         trip.holiday_formatted_id
+        //       ] = trip.holiday_url;
+        //       this.messages = [...this.messages];
+        //     }
+        //     else{
+        //       this.decryptService
+        //       .getEncryptItNo(trip.holiday_formatted_id)
+        //       .subscribe((encryptedNo: string) => {
+        //         this.itineraryUrls[
+        //           trip.holiday_formatted_id
+        //         ] = `${environment.redirectDomain}/${encryptedNo}`;
+        //         this.messages = [...this.messages];
+        //       });
+        //     }
+
+        //   });
+        // }
 
         this.messages.push(botMessage);
         setTimeout(() => this.scrollToBottom(), 100);
@@ -202,7 +203,17 @@ export class AppComponent implements OnInit {
   scrollToBottom(): void {
     if (this.chatBodyRef) {
       const element = this.chatBodyRef.nativeElement;
-      element.scrollTop = element.scrollHeight;
+      // Scroll smoothly
+      element.scrollTo({
+        top: element.scrollHeight,
+        behavior: 'smooth'
+      });
     }
+  }
+
+  adjustTextareaHeight(event: any): void {
+    const textarea = event.target;
+    textarea.style.height = 'auto';
+    textarea.style.height = textarea.scrollHeight + 'px';
   }
 }

@@ -1,99 +1,84 @@
-<!-- <div class="container-fluid content"> -->
-<section>
-  <app-header></app-header>
+<section class="chat-layout">
+  <app-header class="fixed-header"></app-header>
 
-  <div class="chat">
-    <div class="container chat-body" #chatBodyRef>
-      <h1 *ngIf="!messages || messages?.length === 0">
-        Discover Your Dream Holiday with AI
-      </h1>
-      <p *ngIf="!messages || messages?.length === 0">
-        Discover your next perfect getaway with the power of AI. Just describe
-        what you’re looking for—and let our smart assistant generate
-        personalized holiday ideas in seconds.
-      </p>
+  <div class="chat-viewport">
+    <div class="chat-container" #chatBodyRef>
 
+      <!-- Empty State -->
+      <div *ngIf="messages.length === 0" class="empty-state">
+        <div class="logo-pulse">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+          </svg>
+        </div>
+        <h2>Hello, I'm the PulseIQ AI Assistant</h2>
+        <p>How can I help you today?</p>
+      </div>
 
-      <div *ngFor="let message of messages" class="message-container" [ngClass]="message.type">
-        <div class="message-box message-body">
-          <div class="bot-msg">{{ message.content }}</div>
+      <!-- Message Loop -->
+      <div class="message-list">
+        <div *ngFor="let message of messages" class="message-row"
+          [ngClass]="{'user-row': message.type === 'user', 'bot-row': message.type === 'bot'}">
 
-          <div *ngIf="message.itineraries && message.itineraries.length > 0" class="itinerary-list">
-            <div class="itinerary-card" *ngFor="let trip of message.itineraries">
-              <!-- <img [src]="trip.holiday_image" alt="{{ trip.holiday_name }}" class="trip-image" /> -->
-              <div class="image-wrapper">
-                <img [src]="trip.holiday_image" alt="{{ trip.holiday_name }}" class="trip-image" />
-                <div class="overlay">
-                  <div>
-                    <p class="trip-title-overlay">{{ trip.holiday_name }}</p>
-                  </div>
-                  <div>
-                    <a class="trip-title-overlay-btn" [href]="itineraryUrls[trip.holiday_formatted_id]"
-                      target="_blank">EXPLORE TRIP</a>
-                  </div>
+          <!-- Bot Avatar (Only show for bot) -->
+          <div *ngIf="message.type === 'bot'" class="avatar bot-avatar">
+            <svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="2">
+              <path d="M12 2a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2 2 2 0 0 1-2-2V4a2 2 0 0 1 2-2z" />
+              <path d="M12 16a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-2a2 2 0 0 1 2-2z" />
+              <path d="M5 9v6h14V9a7 7 0 0 0-14 0z" />
+            </svg>
+          </div>
+
+          <!-- Message Bubble -->
+          <div class="bubble">
+            <markdown [data]="message.content"></markdown>
+
+            <div *ngIf="message.itineraries && message.itineraries.length > 0" class="cards-grid">
+              <div class="mini-card" *ngFor="let trip of message.itineraries">
+                <div class="card-img-placeholder"></div>
+                <div class="card-info">
+                  <strong>{{ trip.holiday_name }}</strong>
                 </div>
-
               </div>
-              <!-- 
-              <div class="trip-details">
-                <h3>{{ trip.holiday_name }}</h3>
-                <p>NO. OF DAYS: {{ trip.no_of_days || 'TBD'}}</p>
-                <p>START DATE: {{ trip.start_date || 'TBD' }}</p>
-                <p>BOOKING FOR: {{ trip.booking_prepared_for || 'TBD' }}</p>
-                <div class="hr-line"></div>
-              </div> -->
-
             </div>
-            <!-- <pre>{{ itineraryUrls | json }}</pre> -->
-
-
           </div>
-          <div *ngIf="message.type === 'bot'" class="contact-us">
-            <div class="bot-msg">Didn't find the perfect itinerary for your adventure? No worries — we can customize it
-              just for you!</div>
-            <a [href]="'javascript:void(0)'">ENQUIRE NOW</a>
+
+        </div>
+
+        <!-- Loading Indicator -->
+        <div *ngIf="isLoading" class="message-row bot-row">
+          <div class="avatar bot-avatar">
+            <svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="2">
+              <path d="M12 2a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2 2 2 0 0 1-2-2V4a2 2 0 0 1 2-2z" />
+              <path d="M12 16a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-2a2 2 0 0 1 2-2z" />
+              <path d="M5 9v6h14V9a7 7 0 0 0-14 0z" />
+            </svg>
+          </div>
+          <div class="bubble">
+            <div class="typing-dots">
+              <span></span><span></span><span></span>
+            </div>
           </div>
         </div>
       </div>
 
-      <div *ngIf="isLoading" class="message-container bot">
-        <div class="message-box loading">
-          <div class="typing-indicator">
-            <span></span>
-            <span></span>
-            <span></span>
-          </div>
-        </div>
-      </div>
     </div>
+  </div>
 
-    <div class="container input-container">
+  <!-- Input Area -->
+  <div class="input-area">
+    <div class="input-glass-wrapper">
+      <textarea #userMessageInput placeholder="Type your message..."
+        (keydown.enter)="sendMessage(userMessageInput.value); $event.preventDefault()" rows="1"></textarea>
 
-      <textarea #userMessageInput placeholder="Type your holiday idea or prompt..."
-        (keydown.enter)="sendMessage(userMessageInput.value)" rows="2" class="styled-textarea"></textarea>
-
-      <!-- <svg
-        (click)="sendMessage(userMessageInput.value)"
-        class="send-icon"
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 24 24"
-      >
-        <path fill="white" d="M2 21l21-9L2 3v7l15 2-15 2v7z" />
-      </svg> -->
-      <ng-container *ngIf="!isLoading; else generating">
-        <svg (click)="sendMessage(userMessageInput.value)" class="send-icon" xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 24 24">
-          <path fill="white" d="M2 21l21-9L2 3v7l15 2-15 2v7z" />
+      <button class="send-btn" [disabled]="isLoading || !userMessageInput.value"
+        (click)="sendMessage(userMessageInput.value)">
+        <!-- Solid icon for white background visibility -->
+        <svg viewBox="0 0 24 24">
+          <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z" />
         </svg>
-      </ng-container>
-
-      <ng-template #generating>
-        <svg class="send-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-          <circle cx="12" cy="12" r="10" fill="white" />
-          <rect x="9" y="9" width="6" height="6" fill="black" rx="1" ry="1" />
-        </svg>
-      </ng-template>
-
+      </button>
     </div>
+    <p class="disclaimer">PulseIQ AI generated content. Please verify important details.</p>
   </div>
 </section>

@@ -8,16 +8,16 @@ import { HttpClient } from '@angular/common/http';
 export class DecryptService {
 
   constructor(private http: HttpClient) { }
-  
-  getEncryptItNo(itNo:any): Observable<any>{
-    // return this.http.get(`${environment.EncryDecryUrl}?itineraryno=${itNo}`);
-    return this.http.get(`${environment.EncryDecryUrl}/encrpt?encyStr=${itNo}`, {
-      responseType: 'text',
-    });
-  }
 
-  getDecryptItNo(itNo:any): Observable<any>{
-    // return this.http.get(`${environment.EncryDecryUrl}?itineraryno=${itNo}`);
-    return this.http.get(`${environment.EncryDecryUrl}`);
-  }
+  // getEncryptItNo(itNo:any): Observable<any>{
+  //   // return this.http.get(`${environment.EncryDecryUrl}?itineraryno=${itNo}`);
+  //   return this.http.get(`${environment.EncryDecryUrl}/encrpt?encyStr=${itNo}`, {
+  //     responseType: 'text',
+  //   });
+  // }
+
+  // getDecryptItNo(itNo:any): Observable<any>{
+  //   // return this.http.get(`${environment.EncryDecryUrl}?itineraryno=${itNo}`);
+  //   return this.http.get(`${environment.EncryDecryUrl}`);
+  // }
 }
